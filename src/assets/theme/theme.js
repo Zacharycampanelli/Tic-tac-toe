@@ -1,8 +1,9 @@
 import { extendTheme } from '@chakra-ui/react';
 import '@fontsource/outfit';
+import  Button  from './Button';
 
 const breakpoints = {
-  base: null,
+  base: 0,
   sm: '23.4375em',
   md: '48em',
   lg: '90em',
@@ -26,6 +27,14 @@ const fonts = {
   body: `Outfit, 'sans-serif'`,
 };
 
+const styles = {
+    global: {
+        'html, body': {
+            backgroundColor: 'navy'
+        }
+    }
+}
+
 const textStyles = {
   h1: {
     fontFamily: 'Outfit',
@@ -44,19 +53,24 @@ const textStyles = {
     letterSpacing: '1.25px',
   },
   h4: {
-    fontSize: '16px',
+    fontSize: ['10px', '14px', '14px','16px'],
     fontWeight: 'bold',
     letterSpacing: '1px',
   },
   p: {
     fontSize: '14px',
     fontWeight: 'medium',
-    letterSpacing: '0.8px',
+    letterSpacing: '0.875px',
+    
   },
 };
 
+const components = {
+    Button
+}
+
 const typography = {};
 
-const theme = extendTheme({ breakpoints, colors, fonts, textStyles, components: Button,  });
+const theme = extendTheme({ breakpoints, colors, fonts, styles, textStyles, components,  });
 
 export default theme;

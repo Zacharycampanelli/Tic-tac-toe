@@ -5,7 +5,9 @@ const Button = defineStyleConfig({
     fontFamily: 'Outfit',
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'navy',
+    margin: '1em 0 0'
 
   },
   sizes: {
@@ -13,6 +15,7 @@ const Button = defineStyleConfig({
         borderRadius: '10px',
         fontSize: '16px',
         letterSpacing: '1px'
+        
     },
     lg: {
       borderRadius: '15px',
@@ -23,15 +26,21 @@ const Button = defineStyleConfig({
   variants: {
     orange: {
         background: 'orange',
-        boxShadow: '0px -8px 0px 0px #CC8B13 inset'
+        boxShadow: '0px -8px 0px 0px #CC8B13 inset',
+        _hover: { backgroundColor: 'lightOrange'}
+
     },
     blue: {
         background: 'darkAqua', 
-        boxShadow: '0px -8px 0px 0px #118C87 inset'
+        boxShadow: '0px -8px 0px 0px #118C87 inset',
+        _hover: { backgroundColor: 'aqua'}
+
     },
     gray: {
         background: 'blueGray',
-        boxShadow: '0px -4px 0px 0px #6B8997 inset'
+        boxShadow: '0px -4px 0px 0px #6B8997 inset',
+        _hover: { backgroundColor: 'gray'}
+
     }
   },
   defaultProps: {
@@ -39,3 +48,5 @@ const Button = defineStyleConfig({
     variant: 'orange',
   },
 })
+
+export default Button;
