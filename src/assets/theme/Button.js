@@ -5,9 +5,10 @@ const Button = defineStyleConfig({
     fontFamily: 'Outfit',
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    textAlign: 'center',
     color: 'navy',
-    margin: '1em 0 0'
+    margin: '1em 0 0',
+    justifyContent: 'center',
+    alignItems: 'center'
 
   },
   sizes: {

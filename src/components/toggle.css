@@ -1,25 +1,35 @@
 .xpick {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    background-color: #A8BFC9;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #a8bfc9;
 }
 
-.xpick img{
-    width: 25%;
-    filter: brightness(0) saturate(100%) invert(12%) sepia(16%) saturate(1415%) hue-rotate(157deg) brightness(94%) contrast(89%);
+.xpick img {
+  width: 25%;
+  filter: brightness(0) saturate(100%) invert(12%) sepia(16%) saturate(1415%) hue-rotate(157deg) brightness(94%)
+    contrast(89%);
 }
 
 .opick {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.opick img{
-    width: 25%;
-    filter: brightness(0) saturate(100%) invert(79%) sepia(44%) saturate(116%) hue-rotate(153deg) brightness(90%) contrast(82%);
+.opick img {
+  width: 25%;
+  filter: brightness(0) saturate(100%) invert(79%) sepia(44%) saturate(116%) hue-rotate(153deg) brightness(90%)
+    contrast(82%);
+}
+
+@media screen and (min-width: 768px) {
+
+.xpick img, .opick img {
+    width: 15%;
+}
+
 }
