@@ -2,14 +2,46 @@ import { AbsoluteCenter, Center, Box, Button, Flex, Grid, GridItem, Image } from
 import logo from '../assets/images/logo.svg';
 import X_gray from '../assets/images/icon-x-gray.svg';
 import O_gray from '../assets/images/icon-o-gray.svg';
+import X from '../assets/images/icon-x.svg';
+import O from '../assets/images/icon-o.svg';
 import Restart from '../assets/images/icon-restart.svg';
 import useGameContext from '../assets/theme/context';
 import Square from '../components/Square';
 import SvgIconX from '../assets/images/SvgIconX';
 
 const GameBoard = () => {
-  const { board, playerTurn } = useGameContext();
-  console.log(board);
+  const {
+    board,
+    playerOne,
+    playerTwo,
+    playerTurn,
+    setPlayerTurn,
+    playerTwoCPU,
+    playerOneSpaces,
+    playerTwoSpaces,
+    setBoardPiece,
+    setPlayerSpaces,
+  } = useGameContext();
+
+  const rows = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+    [1, 4, 7],
+    [2, 5, 8],
+    [3, 6, 9],
+    [1, 5, 9],
+    [3, 5, 7],
+  ];
+
+  const playerClick = (e) => {
+    console.log(e);
+ 
+    setPlayerSpaces(e.target.value);
+
+    // setBoardPiece(playerTurn, e.target.value)
+    setPlayerTurn(playerTurn === playerOne ? playerTwo : playerOne);
+  };
 
   return (
     <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start' }}>
@@ -57,9 +89,17 @@ const GameBoard = () => {
         </GridItem>
 
         {board.map((square, index) => (
-          <GridItem w="96px" h="96px" padding="0" borderRadius="5px" sx={{boxShadow: '0px -8px 0px 0px #10212A inset'}}
-          bg="darkBlue">
-            <Square key={index} value={square} />
+          <GridItem
+            w="96px"
+            h="96px"
+            padding="0"
+            borderRadius="5px"
+            sx={{ boxShadow: '0px -8px 0px 0px #10212A inset' }}
+            bg="darkBlue"
+            key={index}
+            onClick={playerClick}
+          >
+            <Square value={square}  />
           </GridItem>
         ))}
         {/*        

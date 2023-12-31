@@ -8,7 +8,7 @@ export const GameProvider = ({ children }) => {
 
     const setPlayers = (icon) => {
         dispatch({
-            type: 'SET_PLAYER_PIECES',
+            type: 'SET_PLAYER_INITIAL_PIECES',
             payload: 
                  icon
             
@@ -29,6 +29,22 @@ export const GameProvider = ({ children }) => {
             payload: player
         })
     }
+
+    const setPlayerSpaces = (space) => {
+        dispatch({
+            type: 'SET_PLAYER_SPACES',
+            payload: space
+        })
+    }
+
+    // const setBoardPiece = (player, boardSpace, ) => {
+    //     let piece = player === 'X' ? X : O
+    //     dispatch({
+    //         type: 'SET_BOARD_PIECE',
+    //         payload: {piece, boardSpace}
+    //     })
+    // }
+
     const value = {
         playerOne: state.playerOne,
         playerTwo: state.playerTwo,
@@ -39,7 +55,9 @@ export const GameProvider = ({ children }) => {
         board: state.board,
         setPlayers,
         setPlayerTwoCPU,
-        setPlayerTurn
+        setPlayerTurn,
+        setPlayerSpaces
+        // setBoardPiece
     }
 return <GameContext.Provider value={value}>{children}</GameContext.Provider>
 
