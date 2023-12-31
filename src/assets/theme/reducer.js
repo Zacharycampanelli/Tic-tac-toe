@@ -5,6 +5,7 @@ export const initialState = {
     playerTurn: null,
     playerOneSpaces: [],
     playerTwoSpaces: [],
+    board: Array(9).fill(null)
 }
 
 const gameReducer = (initialState, action) => {

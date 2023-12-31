@@ -36,6 +36,7 @@ export const GameProvider = ({ children }) => {
         playerTurn: state.playerTurn,
         playerOneSpaces: state.playerOneSpaces,
         playerTwoSpaces: state.playerTwoSpaces,
+        board: state.board,
         setPlayers,
         setPlayerTwoCPU,
         setPlayerTurn
