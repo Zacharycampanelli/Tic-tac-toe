@@ -34,8 +34,8 @@ export const GameProvider = ({ children }) => {
     });
   };
 
-  const setBoardPiece = (player, boardIndex) => {
-    let piece = player === 'X' ? 'X' : 'O';
+  const setBoardPiece = (playerTurn, boardIndex) => {
+    let piece = playerTurn === 'X' ? 'X' : 'O';
     dispatch({
       type: 'SET_BOARD_PIECE',
       payload: { piece, boardIndex },

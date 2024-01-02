@@ -25,9 +25,11 @@ const gameReducer = (initialState, action) => {
         playerTwo: { symbol: other, name: 'playerTwo' },
       };
     case 'SET_PLAYERTWO_CPU':
+        const tempPlayer = {...initialState.playerTwo}
       return {
         ...initialState,
         playerTwoCPU: action.payload,
+        playerTwo: {...tempPlayer, name: 'CPU'}
       };
     case 'SET_PLAYER_TURN':
       return {
@@ -67,7 +69,9 @@ const gameReducer = (initialState, action) => {
         let emptyBoard = Array(9).fill(null)
         return {
             ...initialState,
-            board: [...emptyBoard]
+            board: [...emptyBoard],
+            roundWinner: null,
+            playerTurn: 'X'
         }
 
     default:

@@ -27,7 +27,6 @@ const GameBoard = () => {
     clearBoard
   } = useGameContext();
 
-  const [playerToCheck, setPlayerToCheck] = useState('X');
 
   const rows = [
     [0, 1, 2],
@@ -39,13 +38,37 @@ const GameBoard = () => {
     [0, 4, 8],
     [2, 4, 6],
   ];
+
+  const generatePossibleMoves = () => {
+    const empties = []
+    board.forEach((item, index) => {
+      if(item === null) empties.push(index)
+    })
+  return empties
+  }
   
+  const CpuPlayerMove = () => {
+    let choices = generatePossibleMoves()
+    let randomChoice
+    do {
+      console.log(choices)
+      console.log('reroll')
+       randomChoice = Math.floor(Math.random() * choices.length)
+    } while (board[randomChoice] !== null || choices.length === 0)
+    
+    console.log(randomChoice)
+    setBoardPiece(playerTurn, randomChoice)
+  }
 
 
   const playerClick = (e) => {
-    if (!roundWinner) {
+    if (!roundWinner && playerTurn ) {
       setBoardPiece(playerTurn, e.target.value);
       setPlayerTurn(playerTurn === playerOne.symbol ? playerTwo.symbol : playerOne.symbol);
+    }
+
+    if(playerTwoCPU) {
+      CpuPlayerMove();
     }
   };
 
