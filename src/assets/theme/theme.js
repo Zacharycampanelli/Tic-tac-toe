@@ -63,6 +63,11 @@ const textStyles = {
     letterSpacing: '0.875px',
     
   },
+  subp: {
+    fontSize: '12px',
+    fontWeight:'medium',
+    letterSpacing: '0.75px'
+  }
 };
 
 const components = {

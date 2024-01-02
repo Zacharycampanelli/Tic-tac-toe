@@ -3,16 +3,18 @@ import { Button, Flex, Image } from '@chakra-ui/react';
 import logo from '../assets/images/logo.svg';
 import SelectPlayer from '../components/SelectPlayer';
 import useGameContext from '../assets/theme/context';
-const StartScreen = () => {
+const StartScreen = ({setStartGame}) => {
 const {playerOne, playerTwo, setPlayerTwoCPU, setPlayerTurn} = useGameContext()
 
 const setPlayers = (choice) => {
+  setStartGame(true)
   setPlayerTwoCPU(choice)
   
   if(playerOne.symbol === 'X' )
  setPlayerTurn(playerOne.symbol)
 else 
 setPlayerTurn(playerTwo.symbol)
+
 }
 
   return (

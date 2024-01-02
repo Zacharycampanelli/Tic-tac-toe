@@ -1,4 +1,4 @@
-import { AbsoluteCenter, Center, Box, Button, Flex, Grid, GridItem, Image } from '@chakra-ui/react';
+import { Center, Box, Button, Flex, Grid, GridItem, Image } from '@chakra-ui/react';
 import logo from '../assets/images/logo.svg';
 import X_gray from '../assets/images/icon-x-gray.svg';
 import O_gray from '../assets/images/icon-o-gray.svg';
@@ -9,6 +9,7 @@ import useGameContext from '../assets/theme/context';
 import Square from '../components/Square';
 import SvgIconX from '../assets/images/SvgIconX';
 import { useEffect, useState } from 'react';
+import Footer from '../components/Footer';
 
 const GameBoard = () => {
   const {
@@ -18,61 +19,61 @@ const GameBoard = () => {
     playerTurn,
     setPlayerTurn,
     playerTwoCPU,
-    playerOneSpaces,
-    playerTwoSpaces,
     setBoardPiece,
     setPlayerSpaces,
     roundWinner,
-    setRoundWinner
+    setRoundWinner,
+    setScore
   } = useGameContext();
 
-  const [playerToCheck, setPlayerToCheck] = useState('X')
+  const [playerToCheck, setPlayerToCheck] = useState('X');
 
   const rows = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
-    [0,3,6],
-    [1,4,7],
-    [2,5,8],
-    [0,4,8],
-    [2,4,6],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
   ];
   let isWinner;
 
   const playerClick = (e) => {
-  if(!roundWinner ) {
-
-    
-    setPlayerSpaces(e.target.value);
-    setBoardPiece(playerTurn, e.target.value)
-    // const x = checkIfWin()
-    // console.log(x)
-    // setPlayerToCheck(playerTurn)
-    setPlayerTurn(playerTurn === playerOne.symbol ? playerTwo.symbol : playerOne.symbol);
-  }
+    if (!roundWinner) {
+      // setPlayerSpaces(e.target.value);
+      setBoardPiece(playerTurn, e.target.value);
+      // const x = checkIfWin()
+      // console.log(x)
+      // setPlayerToCheck(playerTurn)
+      setPlayerTurn(playerTurn === playerOne.symbol ? playerTwo.symbol : playerOne.symbol);
+    }
   };
 
   const checkIfWin = () => {
-
-     for (let i = 0; i < rows.length; i++) {
-      const[x,y,z] = rows[i]
-      if(board[x] && board[x] === board[y] && board[y] === board[z]) {
-        return board[x]
+    for (let i = 0; i < rows.length; i++) {
+      const [x, y, z] = rows[i];
+      if (board[x] && board[x] === board[y] && board[y] === board[z]) {
+        return board[x];
       }
-     }
-
-    
-
+    }
   };
 
-useEffect(() => {
-  const winner = checkIfWin()
-  if(winner)
-  setRoundWinner(winner)
-}, [board])
-
-  
+  const setRoundScore = (winner) => {
+    console.log(winner === playerOne.symbol)
+   if (winner === playerOne.symbol) setScore('p1') 
+   else if (winner === playerTwo.symbol) setScore('p2') 
+   else setScore('tie')
+  }
+ 
+  useEffect(() => {
+    const winner = checkIfWin();
+    if (winner) {
+      setRoundWinner(winner);
+      setRoundScore(winner)
+    }
+  }, [board]);
 
   return (
     <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start' }}>
@@ -120,56 +121,12 @@ useEffect(() => {
         </GridItem>
 
         {board.map((square, index) => (
-          <GridItem
-            w="96px"
-            h="96px"
-            padding="0"
-            borderRadius="5px"
-            sx={{ boxShadow: '0px -8px 0px 0px #10212A inset' }}
-            bg="darkBlue"
-            key={index}
-            onClick={playerClick}
-          >
+          <GridItem w="96px" h="96px" padding="0" borderRadius="5px" bg="darkBlue" key={index} onClick={playerClick}>
             <Square value={index} />
           </GridItem>
         ))}
-        {/*        
-        <GridItem w="100%" h="10" bg="darkBlue" />
-        <GridItem w="100%" h="10" bg="darkBlue" />
-        <GridItem w="100%" h="10" bg="darkBlue" />
 
-        <GridItem w="100%" h="10" bg="darkBlue" />
-        <GridItem w="100%" h="10" bg="darkBlue" />
-        <GridItem w="100%" h="10" bg="darkBlue" />
-
-        <GridItem w="100%" h="10" bg="darkBlue" />
-        <GridItem w="100%" h="10" bg="darkBlue" />
-        <GridItem w="100%" h="10" bg="darkBlue" /> */}
-
-        <GridItem
-          w="96px"
-          h="64px"
-          padding="0"
-          borderRadius="5px"
-          bg="darkBlue"
-          sx={{ boxShadow: '0px -8px 0px 0px #10212A inset' }}
-        />
-        <GridItem
-          w="96px"
-          h="64px"
-          padding="0"
-          borderRadius="5px"
-          bg="darkBlue"
-          sx={{ boxShadow: '0px -8px 0px 0px #10212A inset' }}
-        />
-        <GridItem
-          w="96px"
-          h="64px"
-          padding="0"
-          borderRadius="5px"
-          bg="darkBlue"
-          sx={{ boxShadow: '0px -8px 0px 0px #10212A inset' }}
-        />
+        <Footer />
       </Grid>
     </Center>
   );

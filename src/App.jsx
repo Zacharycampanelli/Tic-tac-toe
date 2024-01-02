@@ -10,6 +10,7 @@ function App() {
     // const [vsCpu, setVsCpu] = useState(null)
     
     const {playerOne, playerTwo, setPlayers, PlayerTwoCPU, playerTurn} = useGameContext();
+    const [startGame, setStartGame] = useState(false)
     // useEffect(() => {
     // //   playerOne === 'X' ? setPlayerTwo('O') : setPlayerTwo('X')
     // setPlayers()
@@ -17,10 +18,8 @@ function App() {
 
     return (
         <Box>
-    {!playerTurn && 
-      <StartScreen />
-  }
-    {playerTurn && <GameBoard />}
+    {!startGame ? 
+      <StartScreen setStartGame={setStartGame} /> : <GameBoard />}
    
     </Box>
   );
