@@ -63,6 +63,13 @@ const gameReducer = (initialState, action) => {
         scores: { ...tempScores },
       };
 
+      case 'CLEAR_BOARD':
+        let emptyBoard = Array(9).fill(null)
+        return {
+            ...initialState,
+            board: [...emptyBoard]
+        }
+
     default:
       return initialState;
   }

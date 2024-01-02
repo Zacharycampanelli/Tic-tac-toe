@@ -23,7 +23,8 @@ const GameBoard = () => {
     setPlayerSpaces,
     roundWinner,
     setRoundWinner,
-    setScore
+    setScore,
+    clearBoard
   } = useGameContext();
 
   const [playerToCheck, setPlayerToCheck] = useState('X');
@@ -38,15 +39,12 @@ const GameBoard = () => {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  let isWinner;
+  
+
 
   const playerClick = (e) => {
     if (!roundWinner) {
-      // setPlayerSpaces(e.target.value);
       setBoardPiece(playerTurn, e.target.value);
-      // const x = checkIfWin()
-      // console.log(x)
-      // setPlayerToCheck(playerTurn)
       setPlayerTurn(playerTurn === playerOne.symbol ? playerTwo.symbol : playerOne.symbol);
     }
   };
@@ -74,6 +72,18 @@ const GameBoard = () => {
       setRoundScore(winner)
     }
   }, [board]);
+
+  useEffect(() => {
+    let spacesRemaining = 9
+    board.forEach(item =>{
+      if ((item === 'X') || (item === 'O'))
+        --spacesRemaining
+    })
+   if(spacesRemaining === 0){
+     setRoundWinner('tie') 
+    setRoundScore('tie')
+   } 
+  }, [board])
 
   return (
     <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start' }}>
@@ -115,7 +125,7 @@ const GameBoard = () => {
           alignItems="center"
         >
           {' '}
-          <Button variant="gray" width="40px" height="40px" padding="0" margin="0">
+          <Button variant="gray" width="40px" height="40px" padding="0" margin="0" onClick={clearBoard}>
             <img src={Restart} alt="restart button" />
           </Button>
         </GridItem>

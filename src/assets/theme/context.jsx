@@ -50,6 +50,12 @@ export const GameProvider = ({ children }) => {
 
   }
 
+  const clearBoard = () => {
+    dispatch({
+        type: 'CLEAR_BOARD'
+    })
+  }
+
   const value = {
     playerOne: state.playerOne,
     playerTwo: state.playerTwo,
@@ -63,7 +69,8 @@ export const GameProvider = ({ children }) => {
     setPlayerTurn,
     setRoundWinner,
     setBoardPiece,
-    setScore
+    setScore, 
+    clearBoard
   };
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 };
