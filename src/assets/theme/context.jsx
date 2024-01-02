@@ -37,13 +37,22 @@ export const GameProvider = ({ children }) => {
         })
     }
 
-    // const setBoardPiece = (player, boardSpace, ) => {
-    //     let piece = player === 'X' ? X : O
-    //     dispatch({
-    //         type: 'SET_BOARD_PIECE',
-    //         payload: {piece, boardSpace}
-    //     })
-    // }
+    const setRoundWinner = (player) => {
+        dispatch({ 
+            type: 'SET_ROUND_WINNER',
+            payload: player
+        })
+    }
+
+
+
+    const setBoardPiece = (player, boardIndex ) => {
+        let piece = player === 'X' ? 'X' : 'O'
+        dispatch({
+            type: 'SET_BOARD_PIECE',
+            payload: {piece, boardIndex}
+        })
+    }
 
     const value = {
         playerOne: state.playerOne,
@@ -53,11 +62,14 @@ export const GameProvider = ({ children }) => {
         playerOneSpaces: state.playerOneSpaces,
         playerTwoSpaces: state.playerTwoSpaces,
         board: state.board,
+        roundWinner: state.roundWinner,
         setPlayers,
         setPlayerTwoCPU,
         setPlayerTurn,
-        setPlayerSpaces
-        // setBoardPiece
+        setPlayerSpaces,
+        setRoundWinner,
+    
+        setBoardPiece
     }
 return <GameContext.Provider value={value}>{children}</GameContext.Provider>
 

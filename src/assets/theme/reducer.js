@@ -2,26 +2,28 @@ import X from '../images/icon-x.svg';
 import O from '../images/icon-o.svg';
 
 export const initialState = {
-    playerOne: 'X',
-    playerTwo: 'O',
+    playerOne: {symbol:'X', name: 'playerOne'},
+    playerTwo: {symbol:'O', name: 'playerTwo '},
     playerTwoCPU: null,
-    playerTurn: null,
+    playerTurn: 'X',
     playerOneSpaces: [],
     playerTwoSpaces: [],
-    board: Array(9).fill().map((_, i) => i + 1)
+    roundWinner: null,
+    board: Array(9).fill(null)
 }
 
 const gameReducer = (initialState, action) => {
     switch(action.type) {
         case 'SET_PLAYER_INITIAL_PIECES':
+            // let 
             let other = '';
             if (action.payload === 'X') other = 'O'
             else other = 'X'
             
             return {
                 ...initialState,
-                playerOne: action.payload,
-                playerTwo: other,
+                playerOne: {symbol: action.payload, name: 'playerOne'},
+                playerTwo: {symbol: other, name: 'playerTwo'},
                 
             }
             case 'SET_PLAYERTWO_CPU':
@@ -31,12 +33,13 @@ const gameReducer = (initialState, action) => {
                     
                 }
             case 'SET_PLAYER_TURN':
+            
                 return {
                     ...initialState,
                     playerTurn: action.payload
                 }
             case 'SET_PLAYER_SPACES':
-                if(initialState.playerTurn === initialState.playerOne) {
+                if(initialState.playerTurn === initialState.playerOne.symbol) {
                     let temp = [...initialState.playerOneSpaces, Number(action.payload)]
                     return {
                         ...initialState, 
@@ -50,12 +53,19 @@ const gameReducer = (initialState, action) => {
                         playerTwoSpaces: temp
                     }
                 }
-        
-            // case 'SET_BOARD_PIECE':
-            //     return {
-            //         ...initialState,
-            //         board: [...initialState.board.filter(space => space.value !==  action.payload.boardSpace), action.payload.piece] = 
-            //     }
+                case 'SET_ROUND_WINNER':
+                    return {
+                        ...initialState,
+                        roundWinner: action.payload
+                    }
+
+            case 'SET_BOARD_PIECE':
+                let temp = [...initialState.board]
+                temp[action.payload.boardIndex] = action.payload.piece
+                return {
+                    ...initialState,
+                    board: [ ...temp] 
+                }
         default:
             return initialState;
     }

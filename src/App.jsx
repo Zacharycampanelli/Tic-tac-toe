@@ -14,8 +14,7 @@ function App() {
     // //   playerOne === 'X' ? setPlayerTwo('O') : setPlayerTwo('X')
     // setPlayers()
     // },[playerOne])
-    console.log(PlayerTwoCPU === undefined)
-    console.log(PlayerTwoCPU )
+
     return (
         <Box>
     {!playerTurn && 

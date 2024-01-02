@@ -8,6 +8,7 @@ import Restart from '../assets/images/icon-restart.svg';
 import useGameContext from '../assets/theme/context';
 import Square from '../components/Square';
 import SvgIconX from '../assets/images/SvgIconX';
+import { useEffect, useState } from 'react';
 
 const GameBoard = () => {
   const {
@@ -21,27 +22,57 @@ const GameBoard = () => {
     playerTwoSpaces,
     setBoardPiece,
     setPlayerSpaces,
+    roundWinner,
+    setRoundWinner
   } = useGameContext();
 
+  const [playerToCheck, setPlayerToCheck] = useState('X')
+
   const rows = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [1, 4, 7],
-    [2, 5, 8],
-    [3, 6, 9],
-    [1, 5, 9],
-    [3, 5, 7],
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6],
   ];
+  let isWinner;
 
   const playerClick = (e) => {
-    console.log(e);
- 
-    setPlayerSpaces(e.target.value);
+  if(!roundWinner ) {
 
-    // setBoardPiece(playerTurn, e.target.value)
-    setPlayerTurn(playerTurn === playerOne ? playerTwo : playerOne);
+    
+    setPlayerSpaces(e.target.value);
+    setBoardPiece(playerTurn, e.target.value)
+    // const x = checkIfWin()
+    // console.log(x)
+    // setPlayerToCheck(playerTurn)
+    setPlayerTurn(playerTurn === playerOne.symbol ? playerTwo.symbol : playerOne.symbol);
+  }
   };
+
+  const checkIfWin = () => {
+
+     for (let i = 0; i < rows.length; i++) {
+      const[x,y,z] = rows[i]
+      if(board[x] && board[x] === board[y] && board[y] === board[z]) {
+        return board[x]
+      }
+     }
+
+    
+
+  };
+
+useEffect(() => {
+  const winner = checkIfWin()
+  if(winner)
+  setRoundWinner(winner)
+}, [board])
+
+  
 
   return (
     <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start' }}>
@@ -99,7 +130,7 @@ const GameBoard = () => {
             key={index}
             onClick={playerClick}
           >
-            <Square value={square}  />
+            <Square value={index} />
           </GridItem>
         ))}
         {/*        

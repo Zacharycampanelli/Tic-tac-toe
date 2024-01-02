@@ -9,10 +9,10 @@ const {playerOne, playerTwo, setPlayerTwoCPU, setPlayerTurn} = useGameContext()
 const setPlayers = (choice) => {
   setPlayerTwoCPU(choice)
   
-  if(playerOne === 'X' )
- setPlayerTurn(playerOne)
+  if(playerOne.symbol === 'X' )
+ setPlayerTurn(playerOne.symbol)
 else 
-setPlayerTurn(playerTwo)
+setPlayerTurn(playerTwo.symbol)
 }
 
   return (
