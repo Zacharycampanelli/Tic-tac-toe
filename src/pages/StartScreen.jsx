@@ -11,9 +11,9 @@ const setPlayers = (choice) => {
   setPlayerTwoCPU(choice)
   
   if(playerOne.symbol === 'X' )
- setPlayerTurn(playerOne.symbol)
+ setPlayerTurn({...playerOne})
 else 
-setPlayerTurn(playerTwo.symbol)
+setPlayerTurn({...playerTwo})
 
 }
 

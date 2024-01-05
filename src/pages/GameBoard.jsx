@@ -24,10 +24,10 @@ const GameBoard = () => {
     roundWinner,
     setRoundWinner,
     setScore,
-    clearBoard
+    clearBoard,
   } = useGameContext();
 
-
+  const [remaining, setRemaining] = useState([...Array(9).keys()]);
   const rows = [
     [0, 1, 2],
     [3, 4, 5],
@@ -39,36 +39,72 @@ const GameBoard = () => {
     [2, 4, 6],
   ];
 
-  const generatePossibleMoves = () => {
-    const empties = []
-    board.forEach((item, index) => {
-      if(item === null) empties.push(index)
-    })
-  return empties
-  }
+
+  const restartGame = () => {
+    clearBoard();
+    setRemaining([...Array(9).keys()]);
+    setPlayerTurn('X' === playerOne.symbol ? { ...playerOne } : { ...playerTwo });
+  };
+
+  const togglePlayerTurn = () => {
+    let playerX = { name: '', symbol: 'X' };
+    let playerO = { name: '', symbol: 'O' };
+    playerOne.symbol === 'X'
+      ? ((playerX.name = playerOne.name), (playerO.name = playerTwo.name))
+      : ((playerX.name = playerTwo.name), (playerO.name = playerOne.name));
+
+    if (playerTurn.symbol === 'X') {
+      setPlayerTurn(playerO);
+    } else {
+      setPlayerTurn(playerX);
+      
+    }
+    
+    // setTimeout(handleTurn, 3000);
+  };
+
+  const handleTurn = () => {
+    setTimeout(CpuPlayerMove, 2000);
+  };
   
   const CpuPlayerMove = () => {
-    let choices = generatePossibleMoves()
-    let randomChoice
+    if (playerTurn.name === 'CPU') {
+      if (remaining.length > 0 || roundWinner === false) {
+        let randomChoice;
+        console.log('symbol' + playerTurn.symbol)
     do {
-      console.log(choices)
-      console.log('reroll')
-       randomChoice = Math.floor(Math.random() * choices.length)
-    } while (board[randomChoice] !== null || choices.length === 0)
-    
-    console.log(randomChoice)
-    setBoardPiece(playerTurn, randomChoice)
-  }
+      randomChoice = Math.floor(Math.random() * board.length);
+      console.log(randomChoice);
+    } while (board[randomChoice] !== null);
 
+    console.log(randomChoice);
+    if(!roundWinner) {
+
+      setBoardPiece(playerTurn.symbol, randomChoice);
+      removeRemaining(randomChoice);
+      // setPlayerTurn(playerTurn.symbol === playerTwo.symbol ? {...playerOne} : {...playerTwo});
+    }
+    console.log(remaining, randomChoice);
+  }
+  }
+  };
+  
+useEffect(() => {
+  if(playerTwoCPU && playerTurn.name === 'CPU' )
+  setTimeout(CpuPlayerMove, 3000)
+}, [playerTurn])
+
+  const removeRemaining = (numToRemove) => {
+    let updatedArray = remaining.filter((num) => {
+      return num !== numToRemove;
+    });
+    setRemaining(updatedArray);
+  };
 
   const playerClick = (e) => {
-    if (!roundWinner && playerTurn ) {
-      setBoardPiece(playerTurn, e.target.value);
-      setPlayerTurn(playerTurn === playerOne.symbol ? playerTwo.symbol : playerOne.symbol);
-    }
-
-    if(playerTwoCPU) {
-      CpuPlayerMove();
+    if (!roundWinner && playerTurn.name !== 'CPU') {
+      setBoardPiece(playerTurn.symbol, e.target.value);
+      removeRemaining(Number(e.target.value));
     }
   };
 
@@ -82,31 +118,30 @@ const GameBoard = () => {
   };
 
   const setRoundScore = (winner) => {
-    console.log(winner === playerOne.symbol)
-   if (winner === playerOne.symbol) setScore('p1') 
-   else if (winner === playerTwo.symbol) setScore('p2') 
-   else setScore('tie')
-  }
- 
+    console.log(winner === playerOne.symbol);
+    if (winner === playerOne.symbol) setScore('p1');
+    else if (winner === playerTwo.symbol) setScore('p2');
+    else setScore('tie');
+  };
+
   useEffect(() => {
     const winner = checkIfWin();
     if (winner) {
       setRoundWinner(winner);
-      setRoundScore(winner)
+      setRoundScore(winner);
+      setPlayerTurn(null);
+    } else if (!winner && remaining === 0) {
+      setRoundWinner('tie');
+      setRoundScore('tie');
+      setPlayerTurn(null);
     }
+
+    // ensures x is first
+    if(remaining.length < 9)
+    setPlayerTurn(playerTurn.symbol === playerOne.symbol ? {...playerTwo} : {...playerOne})
+
   }, [board]);
 
-  useEffect(() => {
-    let spacesRemaining = 9
-    board.forEach(item =>{
-      if ((item === 'X') || (item === 'O'))
-        --spacesRemaining
-    })
-   if(spacesRemaining === 0){
-     setRoundWinner('tie') 
-    setRoundScore('tie')
-   } 
-  }, [board])
 
   return (
     <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start' }}>
@@ -131,11 +166,9 @@ const GameBoard = () => {
           alignItems="center"
           pb="8px"
         >
-          {playerTurn === 'X' ? (
-            <img src={X_gray} width="16px" height="16px" />
-          ) : (
-            <img src={O_gray} width="16px" height="16px" />
-          )}{' '}
+ 
+            <img src={playerTurn.symbol === 'X' ? X_gray : O_gray} width="16px" height="16px" />
+      
           <Box ml="10px">TURN</Box>
         </GridItem>
         <GridItem
@@ -148,14 +181,14 @@ const GameBoard = () => {
           alignItems="center"
         >
           {' '}
-          <Button variant="gray" width="40px" height="40px" padding="0" margin="0" onClick={clearBoard}>
-            <img src={Restart} alt="restart button" />
+          <Button variant="gray" width="40px" height="40px" padding="0" margin="0" onClick={restartGame}>
+            <img src={Restart} alt="restart button" onClick={'setReset(true)'} />
           </Button>
         </GridItem>
 
         {board.map((square, index) => (
           <GridItem w="96px" h="96px" padding="0" borderRadius="5px" bg="darkBlue" key={index} onClick={playerClick}>
-            <Square value={index} />
+            <Square value={index}  />
           </GridItem>
         ))}
 

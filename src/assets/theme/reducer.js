@@ -5,7 +5,7 @@ export const initialState = {
   playerOne: { symbol: 'X', name: 'playerOne' },
   playerTwo: { symbol: 'O', name: 'playerTwo ' },
   playerTwoCPU: null,
-  playerTurn: 'X',
+  playerTurn: { symbol: 'X', name: ''},
   roundWinner: null,
   board: Array(9).fill(null),
   scores: { p1: 0, p2: 0, ties: 0 },
@@ -34,7 +34,7 @@ const gameReducer = (initialState, action) => {
     case 'SET_PLAYER_TURN':
       return {
         ...initialState,
-        playerTurn: action.payload,
+        playerTurn: {...action.payload},
       };
 
     case 'SET_ROUND_WINNER':

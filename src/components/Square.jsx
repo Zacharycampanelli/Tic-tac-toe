@@ -7,19 +7,21 @@ import { useEffect, useState } from 'react';
 const Square = ({ value }) => {
   const { board, playerTurn, roundWinner } = useGameContext();
   let [icon, setIcon] = useState(null);
-  const addPiece = () => {
+  // const addPiece = () => {
   
-    if(!roundWinner && icon === null) {
-      playerTurn === 'X' ? setIcon(X) : setIcon(O);
-    }
-  };
+  //   if(!roundWinner && icon === null) {
+  //     playerTurn.symbol === 'X' ? setIcon(X) : setIcon(O);
+  //   }
+  // };
 
   useEffect(() => {
     if(board[value] === null) setIcon(null)
+    else {console.log(value) 
+  setIcon(board[value] === 'X' ? X : O)}
   }, [board[value]])
   
   return (
-    <Button bg="darkBlue" variant="none" value={value} w="96px" h="96px" margin="0" onClick={addPiece}             sx={{ boxShadow: '0px -8px 0px 0px #10212A inset' }}
+    <Button bg="darkBlue" variant="none" value={value} w="96px" h="96px" margin="0"          sx={{ boxShadow: '0px -8px 0px 0px #10212A inset' }}
     >
       <Image src={icon} />
     </Button>
