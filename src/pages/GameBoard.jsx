@@ -1,17 +1,20 @@
-import { Center, Box, Button, Flex, Grid, GridItem, Image } from '@chakra-ui/react';
+import {useDisclosure, Center, Box, Button, Flex, Grid, GridItem, Image } from '@chakra-ui/react';
 import logo from '../assets/images/logo.svg';
 import X_gray from '../assets/images/icon-x-gray.svg';
 import O_gray from '../assets/images/icon-o-gray.svg';
-import X from '../assets/images/icon-x.svg';
-import O from '../assets/images/icon-o.svg';
+
 import Restart from '../assets/images/icon-restart.svg';
 import useGameContext from '../assets/theme/context';
 import Square from '../components/Square';
 import SvgIconX from '../assets/images/SvgIconX';
 import { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
+import EndGameModal from '../components/EndGameModal';
 
-const GameBoard = () => {
+const GameBoard = ({setStartGame}) => {
+  const { isOpen, onOpen, onClose} = useDisclosure()
+
+
   const {
     board,
     playerOne,
@@ -46,30 +49,12 @@ const GameBoard = () => {
     setPlayerTurn('X' === playerOne.symbol ? { ...playerOne } : { ...playerTwo });
   };
 
-  const togglePlayerTurn = () => {
-    let playerX = { name: '', symbol: 'X' };
-    let playerO = { name: '', symbol: 'O' };
-    playerOne.symbol === 'X'
-      ? ((playerX.name = playerOne.name), (playerO.name = playerTwo.name))
-      : ((playerX.name = playerTwo.name), (playerO.name = playerOne.name));
+  
 
-    if (playerTurn.symbol === 'X') {
-      setPlayerTurn(playerO);
-    } else {
-      setPlayerTurn(playerX);
-      
-    }
-    
-    // setTimeout(handleTurn, 3000);
-  };
-
-  const handleTurn = () => {
-    setTimeout(CpuPlayerMove, 2000);
-  };
   
   const CpuPlayerMove = () => {
     if (playerTurn.name === 'CPU') {
-      if (remaining.length > 0 || roundWinner === false) {
+      if (remaining.length > 0 || !roundWinner.symbol ) {
         let randomChoice;
         console.log('symbol' + playerTurn.symbol)
     do {
@@ -78,7 +63,7 @@ const GameBoard = () => {
     } while (board[randomChoice] !== null);
 
     console.log(randomChoice);
-    if(!roundWinner) {
+    if(!roundWinner.symbol) {
 
       setBoardPiece(playerTurn.symbol, randomChoice);
       removeRemaining(randomChoice);
@@ -102,7 +87,7 @@ useEffect(() => {
   };
 
   const playerClick = (e) => {
-    if (!roundWinner && playerTurn.name !== 'CPU') {
+    if (!roundWinner.symbol && playerTurn.name !== 'CPU') {
       setBoardPiece(playerTurn.symbol, e.target.value);
       removeRemaining(Number(e.target.value));
     }
@@ -127,13 +112,17 @@ useEffect(() => {
   useEffect(() => {
     const winner = checkIfWin();
     if (winner) {
-      setRoundWinner(winner);
+      console.log(winner)
+      let name = (winner === playerOne.symbol) ? playerOne.name : playerTwo.name
+      setRoundWinner(winner, name);
       setRoundScore(winner);
       setPlayerTurn(null);
+      onOpen()
     } else if (!winner && remaining === 0) {
-      setRoundWinner('tie');
+      setRoundWinner('tie', '');
       setRoundScore('tie');
       setPlayerTurn(null);
+      onOpen()
     }
 
     // ensures x is first
@@ -144,6 +133,7 @@ useEffect(() => {
 
 
   return (
+  <>
     <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start' }}>
       <Grid placeItems="center" justifyContent="center" templateColumns="repeat(3, 1fr)" gap={6} w={{ sm: '90%' }}>
         <GridItem w="96px" h="40px" padding="0" borderRadius="5px">
@@ -182,19 +172,21 @@ useEffect(() => {
         >
           {' '}
           <Button variant="gray" width="40px" height="40px" padding="0" margin="0" onClick={restartGame}>
-            <img src={Restart} alt="restart button" onClick={'setReset(true)'} />
+            <img src={Restart} alt="restart button" onClick={restartGame} />
           </Button>
         </GridItem>
 
         {board.map((square, index) => (
           <GridItem w="96px" h="96px" padding="0" borderRadius="5px" bg="darkBlue" key={index} onClick={playerClick}>
-            <Square value={index}  />
+            <Square value={index}  onOpen={onOpen}/>
           </GridItem>
         ))}
 
         <Footer />
       </Grid>
     </Center>
+      <EndGameModal setStartGame={setStartGame} restartGame={restartGame} isOpen={isOpen} onClose={onClose} roundWinner={roundWinner} playerTwoCPU={playerTwoCPU} />
+      </>
   );
 };
 

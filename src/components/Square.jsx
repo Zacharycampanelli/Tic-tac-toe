@@ -21,7 +21,7 @@ const Square = ({ value }) => {
   }, [board[value]])
   
   return (
-    <Button bg="darkBlue" variant="none" value={value} w="96px" h="96px" margin="0"          sx={{ boxShadow: '0px -8px 0px 0px #10212A inset' }}
+    <Button bg="darkBlue" variant="none" value={value} w="96px" h="96px" margin="0" sx={{ boxShadow: '0px -8px 0px 0px #10212A inset' }}
     >
       <Image src={icon} />
     </Button>

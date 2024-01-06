@@ -19,7 +19,7 @@ function App() {
     return (
         <Box>
     {!startGame ? 
-      <StartScreen setStartGame={setStartGame} /> : <GameBoard />}
+      <StartScreen setStartGame={setStartGame} /> : <GameBoard setStartGame={setStartGame} />}
    
     </Box>
   );

@@ -27,10 +27,10 @@ export const GameProvider = ({ children }) => {
     });
   };
 
-  const setRoundWinner = (player) => {
+  const setRoundWinner = (symbol, name) => {
     dispatch({
       type: 'SET_ROUND_WINNER',
-      payload: player,
+      payload: {symbol, name},
     });
   };
 
@@ -48,6 +48,10 @@ export const GameProvider = ({ children }) => {
             payload: player
         })
 
+  }
+
+  const resetScore = () => {
+    dispatch({ type: 'RESET_SCORE'})
   }
 
   const clearBoard = () => {
@@ -70,6 +74,7 @@ export const GameProvider = ({ children }) => {
     setRoundWinner,
     setBoardPiece,
     setScore, 
+    resetScore,
     clearBoard
   };
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

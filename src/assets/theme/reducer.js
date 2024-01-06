@@ -6,7 +6,7 @@ export const initialState = {
   playerTwo: { symbol: 'O', name: 'playerTwo ' },
   playerTwoCPU: null,
   playerTurn: { symbol: 'X', name: ''},
-  roundWinner: null,
+  roundWinner: { symbol: '', name: ''},
   board: Array(9).fill(null),
   scores: { p1: 0, p2: 0, ties: 0 },
 };
@@ -40,7 +40,7 @@ const gameReducer = (initialState, action) => {
     case 'SET_ROUND_WINNER':
       return {
         ...initialState,
-        roundWinner: action.payload,
+        roundWinner: {symbol: action.payload.symbol, name: action.payload.name},
       };
 
     case 'SET_BOARD_PIECE':
@@ -64,13 +64,17 @@ const gameReducer = (initialState, action) => {
         ...initialState,
         scores: { ...tempScores },
       };
-
+      case 'RESET_SCORE':
+        return {
+            ...initialState,
+            scores: {p1: 0, p2: 0, ties: 0}
+        }
       case 'CLEAR_BOARD':
         let emptyBoard = Array(9).fill(null)
         return {
             ...initialState,
             board: [...emptyBoard],
-            roundWinner: null,
+            roundWinner: {symbol: '', name: ''},
             playerTurn: 'X'
         }
 
