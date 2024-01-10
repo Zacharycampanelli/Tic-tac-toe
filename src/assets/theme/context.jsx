@@ -42,10 +42,10 @@ export const GameProvider = ({ children }) => {
     });
   };
 
-  const setScore = (player) => {
+  const setScore = (symbol) => {
         dispatch({
             type: 'SET_SCORE',
-            payload: player
+            payload: symbol
         })
 
   }

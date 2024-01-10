@@ -44,7 +44,7 @@ const EndGameModal = ({ playerTwo, setStartGame, restartGame, isOpen, onClose, r
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered maxW="100vw" w="100vw">
+    <Modal isOpen={isOpen} onClose={onClose} isCentered closeOnOverlayClick={false} maxW="100vw" w="100vw">
       <ModalOverlay />
       <ModalContent backgroundColor="darkBlue" display="flex" flexDirection="column" alignItems="center" py="40px">
         <ModalHeader textStyle="p" color="blueGray" fontSize="14px">

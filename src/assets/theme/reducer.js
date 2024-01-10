@@ -26,11 +26,9 @@ const gameReducer = (initialState, action) => {
       };
 
     case 'SET_PLAYERTWO_CPU':
-        
       return {
         ...initialState,
         playerTwoCPU: action.payload,
-      
       };
 
     case 'SET_PLAYER_TURN':
@@ -42,43 +40,43 @@ const gameReducer = (initialState, action) => {
     case 'SET_ROUND_WINNER':
       return {
         ...initialState,
-        roundWinner: action.payload.symbol,
+        roundWinner: action.payload,
       };
 
     case 'SET_BOARD_PIECE':
       let tempBoard = [...initialState.board];
-      if(tempBoard[action.payload.boardIndex] === null)
-      tempBoard[action.payload.boardIndex] = action.payload.piece;
+      if (tempBoard[action.payload.boardIndex] === null) tempBoard[action.payload.boardIndex] = action.payload.piece;
       return {
         ...initialState,
         board: [...tempBoard],
       };
     case 'SET_SCORE':
-      let tempScores = {...initialState.scores}
-      if (action.payload === 'p1') {
-        tempScores.p1++
-      } else if (action.payload === 'p2') {
-        tempScores.p2++
-      } else if (action.payload === 'tie'){
+      let tempScores = { ...initialState.scores };
+      if (action.payload === 'tie') {
         tempScores.ties++;
       }
+      else {
+        initialState.playerOne.symbol === action.payload ? tempScores.p1++ : tempScores.p2++;
+
+      }
+
       return {
         ...initialState,
         scores: { ...tempScores },
       };
-      case 'RESET_SCORE':
-        return {
-            ...initialState,
-            scores: {p1: 0, p2: 0, ties: 0}
-        }
-      case 'CLEAR_BOARD':
-        let emptyBoard = Array(9).fill(null)
-        return {
-            ...initialState,
-            board: [...emptyBoard],
-            roundWinner: null,
-            playerTurn: 'X'
-        }
+    case 'RESET_SCORE':
+      return {
+        ...initialState,
+        scores: { p1: 0, p2: 0, ties: 0 },
+      };
+    case 'CLEAR_BOARD':
+      let emptyBoard = Array(9).fill(null);
+      return {
+        ...initialState,
+        board: [...emptyBoard],
+        roundWinner: null,
+        playerTurn: 'X',
+      };
 
     default:
       return initialState;

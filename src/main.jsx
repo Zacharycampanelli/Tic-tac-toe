@@ -8,11 +8,11 @@ import { GameProvider } from './assets/theme/context.jsx';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <ChakraProvider theme={theme}>
       <GameProvider>
         <App />
       </GameProvider>
     </ChakraProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
