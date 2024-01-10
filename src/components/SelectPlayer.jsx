@@ -12,7 +12,7 @@ const SelectPlayer = () => {
     <CardHeader  textStyle="h4" textAlign="center" fontSize={{ sm: '14px', md: '16px' }} color="blueGray" padding="1.5em">
       PICK PLAYER 1’S MARK
     </CardHeader>
-   <TogglePlayer />
+   <TogglePlayer/>
     <CardFooter textStyle="p"  justifyContent="center" color="blueGray" opacity="0.5" padding="1.5em">
     REMEMBER: X GOES FIRST
     </CardFooter>

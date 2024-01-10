@@ -23,7 +23,6 @@ const GameBoard = ({setStartGame}) => {
     setPlayerTurn,
     playerTwoCPU,
     setBoardPiece,
-    setPlayerSpaces,
     roundWinner,
     setRoundWinner,
     setScore,
@@ -53,7 +52,7 @@ const GameBoard = ({setStartGame}) => {
 
   
   const CpuPlayerMove = () => {
-    if (playerTurn.name === 'CPU') {
+    if (playerTurn === playerTwo && playerTwoCPU === 'CPU') {
       if (remaining.length > 0 || !roundWinner.symbol ) {
         let randomChoice;
         console.log('symbol' + playerTurn.symbol)
@@ -65,7 +64,7 @@ const GameBoard = ({setStartGame}) => {
     console.log(randomChoice);
     if(!roundWinner.symbol) {
 
-      setBoardPiece(playerTurn.symbol, randomChoice);
+      setBoardPiece(playerTurn, randomChoice);
       removeRemaining(randomChoice);
       // setPlayerTurn(playerTurn.symbol === playerTwo.symbol ? {...playerOne} : {...playerTwo});
     }
@@ -75,7 +74,7 @@ const GameBoard = ({setStartGame}) => {
   };
   
 useEffect(() => {
-  if(playerTwoCPU && playerTurn.name === 'CPU' )
+  if(playerTwoCPU && playerTurn === playerTwo.symbol )
   setTimeout(CpuPlayerMove, 3000)
 }, [playerTurn])
 
@@ -87,9 +86,10 @@ useEffect(() => {
   };
 
   const playerClick = (e) => {
-    if (!roundWinner.symbol && playerTurn.name !== 'CPU') {
-      setBoardPiece(playerTurn.symbol, e.target.value);
+    if (!roundWinner && (playerOne.symbol === playerTurn) || (playerTwo.symbol === playerTurn && playerTwoCPU === false)) {
+      setBoardPiece(playerTurn, e.target.value);
       removeRemaining(Number(e.target.value));
+      setPlayerTurn(playerTurn === 'X' ? 'O' : 'X')
     }
   };
 
@@ -113,8 +113,8 @@ useEffect(() => {
     const winner = checkIfWin();
     if (winner) {
       console.log(winner)
-      let name = (winner === playerOne.symbol) ? playerOne.name : playerTwo.name
-      setRoundWinner(winner, name);
+      // let name = (winner === playerOne.symbol) ? playerOne : playerTwo
+      setRoundWinner(winner)
       setRoundScore(winner);
       setPlayerTurn(null);
       onOpen()
@@ -126,8 +126,8 @@ useEffect(() => {
     }
 
     // ensures x is first
-    if(remaining.length < 9)
-    setPlayerTurn(playerTurn.symbol === playerOne.symbol ? {...playerTwo} : {...playerOne})
+    // if(remaining.length < 9)
+    // setPlayerTurn(playerTurn === playerOne.symbol ? {...playerTwo} : {...playerOne})
 
   }, [board]);
 
@@ -157,7 +157,7 @@ useEffect(() => {
           pb="8px"
         >
  
-            <img src={playerTurn.symbol === 'X' ? X_gray : O_gray} width="16px" height="16px" />
+            <img src={playerTurn === 'X' ? X_gray : O_gray} width="16px" height="16px" />
       
           <Box ml="10px">TURN</Box>
         </GridItem>
@@ -185,7 +185,7 @@ useEffect(() => {
         <Footer />
       </Grid>
     </Center>
-      <EndGameModal setStartGame={setStartGame} restartGame={restartGame} isOpen={isOpen} onClose={onClose} roundWinner={roundWinner} playerTwoCPU={playerTwoCPU} />
+      <EndGameModal playerTwo={playerTwo} setStartGame={setStartGame} restartGame={restartGame} isOpen={isOpen} onClose={onClose} roundWinner={roundWinner} playerTwoCPU={playerTwoCPU} />
       </>
   );
 };

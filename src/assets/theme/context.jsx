@@ -20,17 +20,17 @@ export const GameProvider = ({ children }) => {
     });
   };
 
-  const setPlayerTurn = (player) => {
+  const setPlayerTurn = (symbol) => {
     dispatch({
       type: 'SET_PLAYER_TURN',
-      payload: player,
+      payload: symbol,
     });
   };
 
-  const setRoundWinner = (symbol, name) => {
+  const setRoundWinner = (symbol) => {
     dispatch({
       type: 'SET_ROUND_WINNER',
-      payload: {symbol, name},
+      payload: symbol,
     });
   };
 

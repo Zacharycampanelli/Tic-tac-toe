@@ -16,18 +16,18 @@ import X from '../assets/images/icon-x.svg';
 import O from '../assets/images/icon-o.svg';
 import useGameContext from '../assets/theme/context';
 
-const EndGameModal = ({ setStartGame, restartGame, isOpen, onClose, roundWinner, playerTwoCPU }) => {
+const EndGameModal = ({ playerTwo, setStartGame, restartGame, isOpen, onClose, roundWinner, playerTwoCPU }) => {
   const { resetScore } = useGameContext();
   const [header, setHeader] = useState('');
   const [winningSymbol, setWinningSymbol] = useState('');
 
   useEffect(() => {
     if (playerTwoCPU === true) {
-      roundWinner.name === 'CPU' ? setHeader('OH NO, YOU LOST ...') : setHeader('YOU WON!');
+      roundWinner === playerTwo ? setHeader('OH NO, YOU LOST ...') : setHeader('YOU WON!');
     }
 
-    if (roundWinner.symbol !== '') {
-      roundWinner.symbol === 'X' ? setWinningSymbol(X) : setWinningSymbol(O);
+    if (roundWinner !== '') {
+      roundWinner === 'X' ? setWinningSymbol(X) : setWinningSymbol(O);
     }
   }, [roundWinner]);
 

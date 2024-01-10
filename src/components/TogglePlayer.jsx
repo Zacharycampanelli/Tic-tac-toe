@@ -4,7 +4,7 @@ import O from '../assets/images/icon-O.svg'
 import useGameContext from '../assets/theme/context';
 
 const TogglePlayer = () => {
-    const {playerOne, setPlayerOne, setPlayers} = useGameContext()
+    const {playerOne, setPlayers} = useGameContext()
   return (
     <CardBody display="flex" justifyContent="center" padding="0">
     <Flex h="4rem" justifyContent="space-between" backgroundColor="navy" w="85%" cursor="pointer">

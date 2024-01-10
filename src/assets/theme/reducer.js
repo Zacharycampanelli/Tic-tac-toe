@@ -2,11 +2,11 @@ import X from '../images/icon-x.svg';
 import O from '../images/icon-o.svg';
 
 export const initialState = {
-  playerOne: { symbol: 'X', name: 'playerOne' },
-  playerTwo: { symbol: 'O', name: 'playerTwo ' },
-  playerTwoCPU: null,
-  playerTurn: { symbol: 'X', name: ''},
-  roundWinner: { symbol: '', name: ''},
+  playerOne: { symbol: 'X' },
+  playerTwo: { symbol: 'O' },
+  playerTwoCPU: true,
+  playerTurn: 'X',
+  roundWinner: null,
   board: Array(9).fill(null),
   scores: { p1: 0, p2: 0, ties: 0 },
 };
@@ -21,26 +21,28 @@ const gameReducer = (initialState, action) => {
 
       return {
         ...initialState,
-        playerOne: { symbol: action.payload, name: 'playerOne' },
-        playerTwo: { symbol: other, name: 'playerTwo' },
+        playerOne: { symbol: action.payload },
+        playerTwo: { symbol: other },
       };
+
     case 'SET_PLAYERTWO_CPU':
-        const tempPlayer = {...initialState.playerTwo}
+        
       return {
         ...initialState,
         playerTwoCPU: action.payload,
-        playerTwo: {...tempPlayer, name: 'CPU'}
+      
       };
+
     case 'SET_PLAYER_TURN':
       return {
         ...initialState,
-        playerTurn: {...action.payload},
+        playerTurn: action.payload,
       };
 
     case 'SET_ROUND_WINNER':
       return {
         ...initialState,
-        roundWinner: {symbol: action.payload.symbol, name: action.payload.name},
+        roundWinner: action.payload.symbol,
       };
 
     case 'SET_BOARD_PIECE':
@@ -74,7 +76,7 @@ const gameReducer = (initialState, action) => {
         return {
             ...initialState,
             board: [...emptyBoard],
-            roundWinner: {symbol: '', name: ''},
+            roundWinner: null,
             playerTurn: 'X'
         }
 
