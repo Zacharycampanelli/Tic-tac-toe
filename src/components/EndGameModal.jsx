@@ -28,6 +28,11 @@ const EndGameModal = ({ playerTwo, setStartGame, restartGame, isOpen, onClose, r
       roundWinner === playerTwo.symbol ? setHeader('OH NO, YOU LOST ...') : setHeader('YOU WON!');
     }
 
+    if(!playerTwoCPU && roundWinner !== 'tie') {
+      roundWinner === playerTwo.symbol ? setHeader('PLAYER 2 WINS:') : setHeader('PLAYER 1 WINS:');
+    }
+
+
     if (roundWinner !== 'tie') {
       roundWinner === 'X' ? setWinningSymbol(X) : setWinningSymbol(O);
     }
