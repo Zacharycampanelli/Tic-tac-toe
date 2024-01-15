@@ -16,9 +16,10 @@ const Footer = () => {
   return (
     <>
         <GridItem
-          w="96px"
-          h="64px"
-          padding="0"
+          w={{sm: "96px", md: "140px"}}
+          h={{sm: "64px", md: "72px"}}
+          p="0"
+          mt={{sm: "1rem", md: "0"}}
           borderRadius="5px"
           bg="darkAqua"
           display="flex"
@@ -31,9 +32,10 @@ const Footer = () => {
         // >X ({(playerTwoCPU && playerOne.symbol === 'X') ? 'YOU' : playerOne.symbol === 'O' ? 'P2' : 'P1'}) <Box textStyle="h3" fontWeight="normal">{scores.p1}</Box></GridItem>
         >X ({determinePlayerLabels('X')}) <Box textStyle="h3" fontWeight="normal">{scores.p1}</Box></GridItem>
         <GridItem
-          w="96px"
-          h="64px"
-          padding="0"
+          w={{sm: "96px", md: "140px"}}
+          h={{sm: "64px", md: "72px"}}
+          p="0"
+          mt={{sm: "1rem", md: "0"}}
           borderRadius="5px"
           bg="blueGray"
           display="flex"
@@ -43,9 +45,10 @@ const Footer = () => {
           textStyle="subp"
         >TIES <Box textStyle="h3" fontWeight="normal">{scores.ties}</Box></GridItem>
         <GridItem
-          w="96px"
-          h="64px"
-          padding="0"
+          w={{sm: "96px", md: "140px"}}
+          h={{sm: "64px", md: "72px"}}
+          p="0"
+          mt={{sm: "1rem", md: "0"}} 
           borderRadius="5px"
           bg="orange"
           display="flex"

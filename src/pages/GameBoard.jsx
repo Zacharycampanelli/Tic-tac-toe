@@ -134,16 +134,16 @@ const GameBoard = ({ setStartGame }) => {
 
   return (
     <>
-      <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start' }}>
-        <Grid placeItems="center" justifyContent="center" templateColumns="repeat(3, 1fr)" gap={6} w={{ sm: '90%' }}>
-          <GridItem w="96px" h="40px" padding="0" borderRadius="5px">
+      <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start', md:'center' }}>
+        <Grid placeItems="center" justifyContent="center" templateColumns="repeat(3, 1fr)" gap={{sm: 6, md: 5}} w={{ sm: '90%', md: '60%' }}>
+          <GridItem w={{sm: "96px", md: "140px"}} h={{sm: "40px", md: "52px"}} p="0" mb={{sm: "2rem", md: "0"}} borderRadius="5px">
             {' '}
             <Image src={logo} alt="X and O logo" />
           </GridItem>
 
           <GridItem
-            w="96px"
-            h="40px"
+            w={{sm: "96px", md: "140px"}} h={{sm: "40px", md: "52px"}}
+            mb={{sm: "2rem", md: "0"}}
             padding="0"
             borderRadius="5px"
             bg="darkBlue"
@@ -161,22 +161,22 @@ const GameBoard = ({ setStartGame }) => {
             <Box ml="10px">TURN</Box>
           </GridItem>
           <GridItem
-            w="96px"
-            h="40px"
+            w={{sm: "96px", md: "140px"}} h={{sm: "40px", md: "52px"}}
             padding="0"
+            mb={{sm: "2rem", md: "0"}}   
             borderRadius="5px"
             display="flex"
             justifyContent="end"
             alignItems="center"
           >
             {' '}
-            <Button variant="gray" width="40px" height="40px" padding="0" margin="0" onClick={restartHandler}>
+            <Button variant="gray" boxSize={{sm: "40px", md: "52px"}} padding="0" margin="0" onClick={restartHandler}>
               <img src={Restart} alt="restart button" />
             </Button>
           </GridItem>
 
           {board.map((square, index) => (
-            <GridItem w="96px" h="96px" padding="0" borderRadius="5px" bg="darkBlue" key={index} onClick={playerClick}>
+            <GridItem boxSize={{sm: "96px", md: "140px"}} padding="0" borderRadius="5px" bg="darkBlue" key={index} onClick={playerClick}>
               <Square value={index} onEndGameOpen={onEndGameOpen} />
             </GridItem>
           ))}
