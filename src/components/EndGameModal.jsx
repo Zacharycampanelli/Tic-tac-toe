@@ -7,9 +7,7 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
   Text,
-  useDisclosure,
 } from '@chakra-ui/react';
 
 import X from '../assets/images/icon-x.svg';

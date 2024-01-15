@@ -10,12 +10,13 @@ import SvgIconX from '../assets/images/SvgIconX';
 import { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import EndGameModal from '../components/EndGameModal';
-
+import ResetGameModal from '../components/ResetGameModal';
 const GameBoard = ({ setStartGame }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isEndGameOpen , onOpen: onEndGameOpen, onClose: onEndGameClose } = useDisclosure()
+  const { isOpen: isResetGameOpen , onOpen: onResetGameOpen, onClose: onResetGameClose } = useDisclosure()
 
   const {
-    board,
+    board, 
     playerOne,
     playerTwo,
     playerTurn,
@@ -45,6 +46,10 @@ const GameBoard = ({ setStartGame }) => {
     setRemaining([...Array(9).keys()]);
     setPlayerTurn('X' === playerOne.symbol ? playerOne.symbol  : playerTwo.symbol );
   };
+
+  const restartHandler = (e) => {
+    onResetGameOpen();
+  }
 
   const CpuPlayerMove = () => {
     console.log(remaining)
@@ -80,6 +85,7 @@ const GameBoard = ({ setStartGame }) => {
   };
 
   const playerClick = (e) => {
+   if(e.target.type === 'button')
     if (
       (!roundWinner && playerOne.symbol === playerTurn) ||
       (playerTwo.symbol === playerTurn && playerTwoCPU === false)
@@ -112,12 +118,12 @@ const GameBoard = ({ setStartGame }) => {
       setRoundWinner(winner);
       setRoundScore(winner);
       setPlayerTurn(null);
-      onOpen();
+      onEndGameOpen();
     } else if (winner !== 'X' && winner !== 'O' && remaining.length === 0) {
       setRoundWinner('tie');
       setRoundScore('tie');
       setPlayerTurn(null);
-      onOpen();
+      onEndGameOpen();
     }
     
     // ensures x is first
@@ -164,14 +170,14 @@ const GameBoard = ({ setStartGame }) => {
             alignItems="center"
           >
             {' '}
-            <Button variant="gray" width="40px" height="40px" padding="0" margin="0" onClick={restartGame}>
-              <img src={Restart} alt="restart button" onClick={restartGame} />
+            <Button variant="gray" width="40px" height="40px" padding="0" margin="0" onClick={restartHandler}>
+              <img src={Restart} alt="restart button" />
             </Button>
           </GridItem>
 
           {board.map((square, index) => (
             <GridItem w="96px" h="96px" padding="0" borderRadius="5px" bg="darkBlue" key={index} onClick={playerClick}>
-              <Square value={index} onOpen={onOpen} />
+              <Square value={index} onEndGameOpen={onEndGameOpen} />
             </GridItem>
           ))}
 
@@ -182,10 +188,16 @@ const GameBoard = ({ setStartGame }) => {
         playerTwo={playerTwo}
         setStartGame={setStartGame}
         restartGame={restartGame}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isEndGameOpen}
+        onClose={onEndGameClose}
         roundWinner={roundWinner}
         playerTwoCPU={playerTwoCPU}
+      />
+      <ResetGameModal
+        setStartGame={setStartGame}
+        restartGame={restartGame}
+        isOpen={isResetGameOpen}
+        onClose={onResetGameClose}
       />
     </>
   );
