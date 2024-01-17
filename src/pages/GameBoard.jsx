@@ -52,11 +52,9 @@ const GameBoard = ({ setStartGame }) => {
   }
 
   const CpuPlayerMove = () => {
-    console.log(remaining)
     if (playerTurn === playerTwo.symbol && playerTwoCPU === true && remaining.length > 0) {
       if (remaining.length > 0 || !roundWinner) {
         let randomChoice;
-        console.log('symbol' + playerTurn.symbol);
         do {
           randomChoice = Math.floor(Math.random() * board.length);
           console.log(randomChoice);
@@ -66,7 +64,6 @@ const GameBoard = ({ setStartGame }) => {
         if (!roundWinner) {
           setBoardPiece(playerTurn, randomChoice);
           removeRemaining(randomChoice);
-          // setPlayerTurn(playerTurn.symbol === playerTwo.symbol ? {...playerOne} : {...playerTwo});
         }
         console.log(remaining, randomChoice);
       }
@@ -113,8 +110,6 @@ const GameBoard = ({ setStartGame }) => {
   useEffect(() => {
     const winner = checkIfWin();
     if (winner) {
-      console.log(winner);
-      // let name = (winner === playerOne.symbol) ? playerOne : playerTwo
       setRoundWinner(winner);
       setRoundScore(winner);
       setPlayerTurn(null);
@@ -129,13 +124,12 @@ const GameBoard = ({ setStartGame }) => {
     // ensures x is first
     if(remaining.length < 9 && !winner)
     setPlayerTurn(playerTurn === 'X' ? 'O' : 'X');
-    // setPlayerTurn(playerTurn === playerOne.symbol ? {...playerTwo} : {...playerOne})
   }, [board]);
 
   return (
     <>
-      <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start', md:'center' }}>
-        <Grid placeItems="center" justifyContent="center" templateColumns="repeat(3, 1fr)" gap={{sm: 6, md: 5}} w={{ sm: '90%', md: '60%' }}>
+      <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start', md:'center' }} >
+        <Grid placeItems="center" justifyContent="center" templateColumns="repeat(3, 1fr)" gap={{sm: 6, md: 5}} w={{ sm: '328px', md: '460px' }}>
           <GridItem w={{sm: "96px", md: "140px"}} h={{sm: "40px", md: "52px"}} p="0" mb={{sm: "2rem", md: "0"}} borderRadius="5px">
             {' '}
             <Image src={logo} alt="X and O logo" />
@@ -151,6 +145,8 @@ const GameBoard = ({ setStartGame }) => {
             textStyle="p"
             textColor="blueGray"
             fontWeight="bold"
+            fontSize={{sm: '14px', md: '16px'}}
+            letterSpacing={{sm: '0.875px', md: '1px'}}
             display="flex"
             justifyContent="center"
             alignItems="center"
