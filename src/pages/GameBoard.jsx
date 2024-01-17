@@ -1,16 +1,14 @@
-import { useDisclosure, Center, Box, Button, Flex, Grid, GridItem, Image } from '@chakra-ui/react';
-import logo from '../assets/images/logo.svg';
-import X_gray from '../assets/images/icon-x-gray.svg';
-import O_gray from '../assets/images/icon-o-gray.svg';
+import { useEffect, useState } from 'react';
+import { useDisclosure, Center, Grid, GridItem } from '@chakra-ui/react';
 
-import Restart from '../assets/images/icon-restart.svg';
+
 import useGameContext from '../assets/theme/context';
 import Square from '../components/Square';
-import SvgIconX from '../assets/images/SvgIconX';
-import { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import EndGameModal from '../components/EndGameModal';
 import ResetGameModal from '../components/ResetGameModal';
+import Header from '../components/Header';
+
 const GameBoard = ({ setStartGame }) => {
   const { isOpen: isEndGameOpen , onOpen: onEndGameOpen, onClose: onEndGameClose } = useDisclosure()
   const { isOpen: isResetGameOpen , onOpen: onResetGameOpen, onClose: onResetGameClose } = useDisclosure()
@@ -47,9 +45,7 @@ const GameBoard = ({ setStartGame }) => {
     setPlayerTurn('X' === playerOne.symbol ? playerOne.symbol  : playerTwo.symbol );
   };
 
-  const restartHandler = (e) => {
-    onResetGameOpen();
-  }
+
 
   const CpuPlayerMove = () => {
     if (playerTurn === playerTwo.symbol && playerTwoCPU === true && remaining.length > 0) {
@@ -130,53 +126,12 @@ const GameBoard = ({ setStartGame }) => {
     <>
       <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start', md:'center' }} >
         <Grid placeItems="center" justifyContent="center" templateColumns="repeat(3, 1fr)" gap={{sm: 6, md: 5}} w={{ sm: '328px', md: '460px' }}>
-          <GridItem w={{sm: "96px", md: "140px"}} h={{sm: "40px", md: "52px"}} p="0" mb={{sm: "2rem", md: "0"}} borderRadius="5px">
-            {' '}
-            <Image src={logo} alt="X and O logo" />
-          </GridItem>
-
-          <GridItem
-            w={{sm: "96px", md: "140px"}} h={{sm: "40px", md: "52px"}}
-            mb={{sm: "2rem", md: "0"}}
-            padding="0"
-            borderRadius="5px"
-            bg="darkBlue"
-            sx={{ boxShadow: '0px -8px 0px 0px #10212A inset' }}
-            textStyle="p"
-            textColor="blueGray"
-            fontWeight="bold"
-            fontSize={{sm: '14px', md: '16px'}}
-            letterSpacing={{sm: '0.875px', md: '1px'}}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            pb="8px"
-          >
-            <img src={playerTurn === 'X' ? X_gray : O_gray} width="16px" height="16px" />
-
-            <Box ml="10px">TURN</Box>
-          </GridItem>
-          <GridItem
-            w={{sm: "96px", md: "140px"}} h={{sm: "40px", md: "52px"}}
-            padding="0"
-            mb={{sm: "2rem", md: "0"}}   
-            borderRadius="5px"
-            display="flex"
-            justifyContent="end"
-            alignItems="center"
-          >
-            {' '}
-            <Button variant="gray" boxSize={{sm: "40px", md: "52px"}} padding="0" margin="0" onClick={restartHandler}>
-              <img src={Restart} alt="restart button" />
-            </Button>
-          </GridItem>
-
+        <Header onResetGameOpen={onResetGameOpen} playerTurn={playerTurn} />
           {board.map((square, index) => (
             <GridItem boxSize={{sm: "96px", md: "140px"}} padding="0" borderRadius="5px" bg="darkBlue" key={index} onClick={playerClick}>
               <Square value={index} onEndGameOpen={onEndGameOpen} />
             </GridItem>
           ))}
-
           <Footer />
         </Grid>
       </Center>
