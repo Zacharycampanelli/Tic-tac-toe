@@ -1,3 +1,5 @@
+
+
 .xpick {
   width: 50%;
   display: flex;
@@ -24,6 +26,15 @@
   width: 25%;
   filter: brightness(0) saturate(100%) invert(79%) sepia(44%) saturate(116%) hue-rotate(153deg) brightness(90%)
     contrast(82%);
+}
+
+.opick:hover {
+  background-color: #1F3641;
+  border: 10px solid #1A2A33;
+}
+
+.opick:hover img {
+  width: 17%;
 }
 
 @media screen and (min-width: 768px) {

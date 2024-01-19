@@ -20,6 +20,7 @@ const FooterItem = ({ symbol, playerLabel, scores, bg }) => {
       fontSize="14px"
       fontWeight="medium"
       letterSpacing="0.875px"
+      textColor="navy"
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
@@ -29,6 +30,7 @@ const FooterItem = ({ symbol, playerLabel, scores, bg }) => {
       <Box
         textStyle="h3"
         fontWeight="bold"
+        textColor="navy"
         fontSize={{ sm: '20px', md: '24px' }}
         letterSpacing={{ sm: '1.25px', md: '1.5px' }}
       >

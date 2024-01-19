@@ -78,11 +78,12 @@ const GameBoard = ({ setStartGame }) => {
   };
 
   const playerClick = (e) => {
-   if(e.target.type === 'button')
+   if(e.target.type === 'button' && board[e.target.value])
     if (
       (!roundWinner && playerOne.symbol === playerTurn) ||
       (playerTwo.symbol === playerTurn && playerTwoCPU === false)
     ) {
+    
       setBoardPiece(playerTurn, e.target.value);
       removeRemaining(Number(e.target.value));
     }
