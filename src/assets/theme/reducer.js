@@ -45,6 +45,7 @@ const gameReducer = (initialState, action) => {
 
     case 'SET_BOARD_PIECE':
       let tempBoard = [...initialState.board];
+      
       if (tempBoard[action.payload.boardIndex] === null) tempBoard[action.payload.boardIndex] = action.payload.piece;
       return {
         ...initialState,

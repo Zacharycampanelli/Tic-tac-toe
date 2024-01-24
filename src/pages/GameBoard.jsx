@@ -78,12 +78,11 @@ const GameBoard = ({ setStartGame }) => {
   };
 
   const playerClick = (e) => {
-   if(e.target.type === 'button' && board[e.target.value])
+  //  if(e.target.type === 'button' ||)
     if (
       (!roundWinner && playerOne.symbol === playerTurn) ||
       (playerTwo.symbol === playerTurn && playerTwoCPU === false)
     ) {
-    
       setBoardPiece(playerTurn, e.target.value);
       removeRemaining(Number(e.target.value));
     }
@@ -129,8 +128,8 @@ const GameBoard = ({ setStartGame }) => {
         <Grid placeItems="center" justifyContent="center" templateColumns="repeat(3, 1fr)" gap={{sm: 6, md: 5}} w={{ sm: '328px', md: '460px' }}>
         <Header onResetGameOpen={onResetGameOpen} playerTurn={playerTurn} />
           {board.map((square, index) => (
-            <GridItem boxSize={{sm: "96px", md: "140px"}} padding="0" borderRadius="5px" bg="darkBlue" key={index} onClick={playerClick}>
-              <Square value={index} onEndGameOpen={onEndGameOpen} />
+            <GridItem boxSize={{sm: "96px", md: "140px"}} padding="0" borderRadius="5px" bg="darkBlue" key={index} >
+              <Square value={index} onEndGameOpen={onEndGameOpen} playerClick={playerClick} />
             </GridItem>
           ))}
           <Footer />

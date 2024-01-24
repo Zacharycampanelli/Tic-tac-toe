@@ -7,9 +7,9 @@ const TogglePlayer = () => {
     const {playerOne, setPlayers} = useGameContext()
   return (
     <CardBody display="flex" justifyContent="center" padding="0">
-    <Flex h="4rem" justifyContent="space-between" backgroundColor="navy" w="85%" cursor="pointer" borderRadius="10px">
-      <Box onClick={() => setPlayers('X')} className={playerOne.symbol === "X" ? "xpick" : "opick"} _hover={{ cursor: 'pointer'}}><img  src={X}  /></Box>
-      <Box onClick={() => setPlayers('O')} className={playerOne.symbol === "X" ? "opick" : "xpick"} _hover={{ cursor: 'pointer'}}><img  src={O} /></Box>
+    <Flex h="4rem" justifyContent="space-between" backgroundColor="navy" w="85%" cursor="pointer">
+      <Box onClick={() => setPlayers('X')} className={playerOne.symbol === "X" ? "xpick" : "opick"}><img  src={X}  /></Box>
+      <Box onClick={() => setPlayers('O')} className={playerOne.symbol === "X" ? "opick" : "xpick"}><img  src={O} /></Box>
     </Flex>
   </CardBody>
   )
