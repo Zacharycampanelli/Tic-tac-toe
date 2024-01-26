@@ -28,6 +28,8 @@ const GameBoard = ({ setStartGame }) => {
   } = useGameContext();
 
   const [remaining, setRemaining] = useState([...Array(9).keys()]);
+ const [winningSequence, setWinningSequence] = useState([])
+
   const rows = [
     [0, 1, 2],
     [3, 4, 5],
@@ -92,6 +94,7 @@ const GameBoard = ({ setStartGame }) => {
     for (let i = 0; i < rows.length; i++) {
       const [x, y, z] = rows[i];
       if (board[x] && board[x] === board[y] && board[y] === board[z]) {
+        setWinningSequence([x, y, z])
         return board[x];
       }
     }
@@ -124,12 +127,12 @@ const GameBoard = ({ setStartGame }) => {
 
   return (
     <>
-      <Center mt="24px" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start', md:'center' }} >
+      <Center mt="24px" w="100vw" h="100vh" display="flex" justifyContent="center" alignItems={{ sm: 'start', md:'center' }} >
         <Grid placeItems="center" justifyContent="center" templateColumns="repeat(3, 1fr)" gap={{sm: 6, md: 5}} w={{ sm: '328px', md: '460px' }}>
         <Header onResetGameOpen={onResetGameOpen} playerTurn={playerTurn} />
           {board.map((square, index) => (
-            <GridItem boxSize={{sm: "96px", md: "140px"}} padding="0" borderRadius="5px" bg="darkBlue" key={index} >
-              <Square value={index} onEndGameOpen={onEndGameOpen} playerClick={playerClick} />
+            <GridItem boxSize={{sm: "96px", md: "140px"}} padding="0" borderRadius="5px"  key={index} >
+              <Square value={index} onEndGameOpen={onEndGameOpen} playerClick={playerClick} winningSequence={winningSequence}/>
             </GridItem>
           ))}
           <Footer />

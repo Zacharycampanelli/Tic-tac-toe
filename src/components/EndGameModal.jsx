@@ -57,9 +57,9 @@ const EndGameModal = ({ playerTwo, setStartGame, restartGame, isOpen, onClose, r
   
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered closeOnOverlayClick={false} maxW="100vw" w="100vw">
+    <Modal isOpen={isOpen} onClose={onClose} isCentered closeOnOverlayClick={false} >
       <ModalOverlay />
-      <ModalContent backgroundColor="darkBlue" display="flex" flexDirection="column" alignItems="center" py="40px">
+      <ModalContent backgroundColor="darkBlue" display="flex" flexDirection="column" alignItems="center" py="40px" minW="100vw" w="100vw">
         <ModalHeader textStyle="p" color="blueGray" fontSize="14px">
          {roundWinner !== 'tie' &&  <Text fontSize='14px'>{header}</Text>}
         </ModalHeader>
@@ -71,11 +71,11 @@ const EndGameModal = ({ playerTwo, setStartGame, restartGame, isOpen, onClose, r
           </Text> : <Text marginLeft="0.5em" fontWeight="bold" color="blueGray" >
             ROUND TIED</Text>}
         </ModalBody>
-        <ModalFooter width="75%" display="flex" justifyContent="space-around">
-          <Button variant="gray" py="8px" onClick={quit}>
+        <ModalFooter width="75%" display="flex" justifyContent="center">
+          <Button variant="gray" py="8px" mr="8px" onClick={quit}>
             QUIT
           </Button>
-          <Button variant="orange" py="8px" onClick={nextRound}>
+          <Button variant="orange" py="8px" ml="8px" onClick={nextRound}>
             NEXT ROUND
           </Button>
         </ModalFooter>
